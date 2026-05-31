@@ -1,0 +1,139 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d0f14;
+  --surface: #14171f;
+  --surface2: #1c2030;
+  --accent: #4fffb0;
+  --text: #e8eaf0;
+  --muted: #8e95a5;
+  --border: rgba(255,255,255,0.07);
+}
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; min-height: 100vh; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(13,15,20,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 56px;
+}
+.nav-logo { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 1px; color: var(--text); }
+.nav-links { display: flex; gap: 8px; }
+.nav-link { background: transparent; border: none; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 6px 16px; border-radius: 20px; cursor: pointer; transition: 0.2s; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { background: var(--surface2); color: var(--accent); }
+.nav-source { font-size: 13px; color: var(--muted); }
+.nav-source a { color: var(--muted); text-decoration: none; }
+.nav-source a:hover { color: var(--text); }
+
+/* PAGES E ESTRUTURA */
+.page { display: none; padding: 60px 48px; max-width: 1300px; margin: 0 auto; }
+.page.active { display: block; }
+.conteudo-container { max-width: 900px; margin: 0 auto; }
+
+header { margin-bottom: 48px; }
+.tag { display: inline-block; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+h1 { font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; line-height: 1.2; letter-spacing: -1px; margin-bottom: 16px; }
+.subtitle { color: var(--muted); font-size: 16px; max-width: 600px; }
+
+/* STATS BAR */
+.stats-container { margin-bottom: 64px; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: 12px; }
+.stat-label { font-size: 13px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+.stat-value { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+
+/* GRAFICOS MULTIPLOS SEÇÕES MINIMALISTAS */
+main { display: flex; flex-direction: column; gap: 80px; }
+.grafico-container { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start; border-top: 1px solid var(--border); padding-top: 48px; }
+.grafico-meta h2 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+.grafico-meta p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.canvas-wrapper { background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: 12px; min-height: 300px; display: flex; align-items: center; justify-content: center; width: 100%; overflow: hidden; }
+.canvas-wrapper > div { width: 100%; }
+
+/* TABELAS E DETALHES */
+.tabelas-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 32px; }
+.tabela-card { background: var(--surface); border: 1px solid var(--border); padding: 32px; border-radius: 12px; }
+.tabela-card h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 24px; }
+.pad-bottom { margin-bottom: 32px; }
+.dados-tabela { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+.dados-tabela th { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.dados-tabela td { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--text); }
+.dados-tabela tr:last-child td { border-bottom: none; }
+.dados-tabela td strong { color: var(--accent); font-family: 'Syne', sans-serif; }
+
+.creditos-texto { margin-top: 48px; border-top: 1px solid var(--border); padding-top: 24px; font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; }
+
+footer { text-align: center; padding: 60px 48px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); margin-top: 100px; }
+
+/* ANIMAÇÃO ESTILIZADA DA BARRINHA DE CARREGAMENTO */
+#loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 100; transition: opacity 0.6s ease; }
+#loading.done { opacity: 0; pointer-events: none; }
+.loader-text { font-family: 'Syne', sans-serif; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
+.loader-bar { width: 200px; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; position: relative; }
+.loader-bar-inner { width: 100%; height: 100%; background: var(--accent); animation: loadingBar 2s cubic-bezier(0.4, 0, 0.2, 1) infinite; transform-origin: left; }
+
+@keyframes loadingBar {
+  0% { transform: scaleX(0) translateX(0); }
+  50% { transform: scaleX(0.5) translateX(100%); }
+  100% { transform: scaleX(0) translateX(400%); }
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 16px;
+  }
+  
+  .grafico-container {
+    grid-template-columns: 1fr; 
+    gap: 24px;
+    padding-top: 32px;
+  }
+  
+  .page {
+    padding: 40px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 0 20px;
+    height: auto;
+    flex-direction: column; 
+    gap: 12px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    overflow-x: auto; 
+    padding-bottom: 4px;
+  }
+  
+  h1 {
+    font-size: 28px; 
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr; 
+  }
+  
+  .rank-grid {
+    grid-template-columns: 1fr; 
+  }
+  
+  .canvas-wrapper {
+    padding: 12px; 
+    min-height: 220px;
+  }
+  
+  .creditos-texto {
+    flex-direction: column; 
+    gap: 8px;
+  }
+}

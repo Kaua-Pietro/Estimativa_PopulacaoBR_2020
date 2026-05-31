@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>População Brasileira 2020</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loading">
+  <div class="loader-text">Carregando dados</div>
+  <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+</div>
+
+<nav>
+  <div class="nav-logo">PopBR · 2020</div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('graficos')">Gráficos</button>
+    <button class="nav-link" onclick="showPage('dados')">Dados</button>
+    <button class="nav-link" onclick="showPage('sobre')">Sobre</button>
+  </div>
+  <div class="nav-source">Fonte: <a href="https://github.com/Kaua-Pietro/ProjetoPandas" target="_blank">GitHub ↗</a></div>
+</nav>
+
+<div id="page-graficos" class="page active">
+  <header>
+    <div class="tag">IBGE · 2020</div>
+    <h1>População Brasileira por Município</h1>
+    <p class="subtitle">Análise visual da estimativa populacional utilizando Vega e padrões Observable.</p>
+  </header>
+
+  <section class="stats-container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">População Total</div>
+        <div class="stat-value" id="stat-pop">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total de Municípios</div>
+        <div class="stat-value" id="stat-mun">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Média por Município</div>
+        <div class="stat-value" id="stat-media">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Estado mais Populoso</div>
+        <div class="stat-value" id="stat-maior">—</div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>01 · População total por Estado</h2>
+        <p>Soma total do contingente populacional distribuído por cada Unidade da Federação.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g1"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>02 · Top 10 Municípios mais Populosos</h2>
+        <p>Exibição dos dez maiores centros urbanos em volume populacional no ano de 2020.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g2"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>03 · Distribuição das Populações Municipais</h2>
+        <p>Histograma de frequência que indica a concentração de municípios de pequeno porte.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g3"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>04 · Dispersão Populacional por Estado</h2>
+        <p>Análise de dispersão revelando a variabilidade interna de cada estado brasileiro.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g4"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>05 · Municípios de São Paulo (SP)</h2>
+        <p>O comportamento demográfico focado nas 20 maiores cidades paulistas.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g5"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>06 · Médias Populacionais por Estado</h2>
+        <p>Comparativo direto do indicador de média populacional por município em cada UF.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g6"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>07 · Cidades menos Povoadas do Brasil</h2>
+        <p>Visão focada nos vinte menores municípios do país em contagem de habitantes.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g7"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>08 · Concentração Demográfica por Região</h2>
+        <p>Mapa de calor linear ordenado pelo peso demográfico das Unidades da Federação.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g8"></div></div>
+    </section>
+
+    <section class="grafico-container">
+      <div class="grafico-meta">
+        <h2>09 · Volume Populacional Acumulado</h2>
+        <p>Área contínua que representa o somatório e crescimento cumulativo da população.</p>
+      </div>
+      <div class="canvas-wrapper"><div id="g9"></div></div>
+    </section>
+  </main>
+</div>
+
+<div id="page-dados" class="page">
+  <div class="conteudo-container">
+    <h2>Tabelas e Rankings</h2>
+    <p class="subtitle">Listagens ordenadas geradas dinamicamente com base no censo e estimativas oficiais.</p>
+    
+    <div class="tabelas-grid">
+      <div class="tabela-card">
+        <h3>🏆 Top 10 mais populosos</h3>
+        <table class="dados-tabela" id="table-top"></table>
+      </div>
+      <div class="tabela-card">
+        <h3>📌 10 menos populosos</h3>
+        <table class="dados-tabela" id="table-bot"></table>
+      </div>
+      <div class="tabela-card">
+        <h3>📊 População por estado</h3>
+        <table class="dados-tabela" id="table-uf"></table>
+      </div>
+      <div class="tabela-card">
+        <h3>📐 Maior média por estado</h3>
+        <table class="dados-tabela" id="table-media"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-sobre" class="page">
+  <div class="conteudo-container">
+    <h2>Sobre o Projeto</h2>
+    <p class="subtitle">Tratamento de dados estruturado em Python/Pandas e interface visual construída sob padrões analíticos modernos.</p>
+
+    <div class="tabela-card pad-bottom">
+      <h3>Dicionário de Atributos</h3>
+      <table class="dados-tabela">
+        <thead>
+          <tr><th>Atributo</th><th>Descrição Teórica</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>UF</td><td>Sigla da Unidade da Federação correspondente</td></tr>
+          <tr><td>Município</td><td>Nome oficial da cidade brasileira</td></tr>
+          <tr><td>População</td><td>Volume absoluto de habitantes estimados para o ano base</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tabela-card">
+      <h3>Indicadores Complementares (Brasil 2020)</h3>
+      <table class="dados-tabela">
+        <thead>
+          <tr><th>Indicador</th><th>Métrica Oficial</th><th>Órgão Responsável</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Taxa de Natalidade</td><td>13,5 / mil hab.</td><td>IBGE / SINASC</td></tr>
+          <tr><td>Taxa de Mortalidade</td><td>7,2 / mil hab.</td><td>IBGE / SIM</td></tr>
+          <tr><td>Expectativa de Vida</td><td>76,8 anos</td><td>IBGE</td></tr>
+          <tr><td>Taxa de Crescimento</td><td>0,72% a.a.</td><td>IBGE</td></tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="creditos-texto">
+      <p><strong>Desenvolvimento:</strong> Douglas Marques e Kauã Pietro</p>
+      <p><strong>Orientação Acadêmica:</strong> Prof. Daniel Costa e Prof. Nazareno</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  IBGE 2020 · Sistema Analítico PopBR
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
