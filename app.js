@@ -2,20 +2,28 @@ const CSV_URL = "https://raw.githubusercontent.com/Kaua-Pietro/ProjetoPandas/ref
 const H = 260; 
 
 const CONFIG = {
-  background: "transparent",
-  axis: { 
-    labelColor: "#8e95a5", 
-    titleColor: "#8e95a5", 
-    gridColor: "rgba(255,255,255,0.05)", 
-    domainColor: "rgba(255,255,255,0.1)", 
-    tickColor: "rgba(255,255,255,0.1)" 
+  background: "#ffffff",
+
+  axis: {
+    labelColor: "#475569",
+    titleColor: "#1e293b",
+    gridColor: "rgba(0,0,0,0.08)",
+    domainColor: "rgba(0,0,0,0.15)",
+    tickColor: "rgba(0,0,0,0.15)"
   },
-  legend: { 
-    labelColor: "#8e95a5", 
-    titleColor: "#8e95a5" 
+
+  legend: {
+    labelColor: "#475569",
+    titleColor: "#1e293b"
   },
-  view: { stroke: "transparent" },
-  title: { color: "#e8eaf0" }
+
+  view: {
+    stroke: "#e2e8f0"
+  },
+
+  title: {
+    color: "#1e293b"
+  }
 };
 
 function showPage(id) {
